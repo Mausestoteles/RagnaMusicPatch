@@ -46,8 +46,9 @@ Umschalter. Jede Wahl wirkt sofort und bleibt nach einem Neustart von Spotify er
 - **Farbschema:** Dunkel, Hell, OLED (reines Schwarz) sowie Vertraut, Ähnlich und Entdecken
   in den Farben der drei RagnaMusic-Algorithmen
 - **Eigenes Theme:** Basis (Dunkel, Hell, OLED) plus eine beliebige Akzentfarbe über
-  Farbwähler, Hex-Wert oder Schnellauswahl. Zu dunkle oder zu helle Akzente werden
-  automatisch so angepasst, dass sie lesbar bleiben.
+  Farbwähler, Hex-Wert, Schnellauswahl oder **Vom Cover** (übernimmt die Farbe des gerade
+  laufenden Songs). Zu dunkle oder zu helle Akzente werden automatisch so angepasst, dass
+  sie lesbar bleiben.
 - **Nach Cover einfärben:** an oder aus
 - **Zurücksetzen:** zurück zum Farbschema, mit dem gepatcht wurde
 

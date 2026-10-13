@@ -99,7 +99,7 @@ $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-$PatchVersion = '0.2.0'
+$PatchVersion = '0.2.1'
 $ThemeName = 'RagnaMusic'
 $PatcherRoot = $PSScriptRoot
 $ThemeSource = Join-Path $PatcherRoot "theme\$ThemeName"

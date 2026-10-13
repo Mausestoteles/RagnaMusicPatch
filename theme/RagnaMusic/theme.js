@@ -293,6 +293,21 @@
       ),
     );
 
+    // Farbe des laufenden Covers als Akzent übernehmen
+    const coverHex = normalizeHex(lastCoverTint);
+    const fromCover = el(
+      "button",
+      {
+        type: "button",
+        class: "ragna-cover-pick",
+        disabled: !coverHex,
+        title: coverHex ? `Farbe des laufenden Covers (#${coverHex})` : "Gerade läuft kein Song mit Cover-Farbe",
+        onclick: () => setCustom({ accent: coverHex }),
+      },
+      el("span", { class: "ragna-cover-pick__dot", style: { background: coverHex ? `#${coverHex}` : "transparent" } }),
+      "Vom Cover",
+    );
+
     const { colors } = resolveColors({ ...state, preset: "custom" });
     return el(
       "section",
@@ -309,7 +324,7 @@
         ),
       ),
       el("div", { class: "ragna-field" }, el("span", {}, "Basis"), bases),
-      el("div", { class: "ragna-field" }, el("span", {}, "Akzent"), el("div", { class: "ragna-accent" }, picker, hexInput, chips)),
+      el("div", { class: "ragna-field" }, el("span", {}, "Akzent"), el("div", { class: "ragna-accent" }, picker, hexInput, chips, fromCover)),
     );
   }
 
@@ -573,6 +588,8 @@
       }
     }
     applyTint();
+    // „Vom Cover“ im offenen Umschalter zeigt die neue Farbe
+    renderSwitcher();
   }
 
   // ---------- Start ----------
