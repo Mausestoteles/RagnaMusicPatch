@@ -1,0 +1,37 @@
+# Release bauen, sobald ein Tag wie v0.3.0 gepusht wird.
+# Der Updater in Spotify und patch.ps1 -Update holen sich von hier die neueste Version.
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Version prüfen
+        shell: pwsh
+        run: |
+          $version = (Select-String patch.ps1 -Pattern "^\`$PatchVersion = '(.+)'").Matches[0].Groups[1].Value
+          if ("v$version" -ne "${{ github.ref_name }}") {
+            throw "Tag ${{ github.ref_name }} passt nicht zu `$PatchVersion = '$version' in patch.ps1"
+          }
+
+      - name: Zip bauen
+        shell: pwsh
+        run: ./tools/build-zip.ps1
+
+      - name: Release anlegen
+        uses: softprops/action-gh-release@v2
+        with:
+          name: RagnaMusic Patch ${{ github.ref_name }}
+          generate_release_notes: true
+          files: |
+            dist/RagnaMusicPatch.zip
+            dist/RagnaMusicPatch.zip.sha256

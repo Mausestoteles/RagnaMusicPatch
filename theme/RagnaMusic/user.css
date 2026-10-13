@@ -1,0 +1,703 @@
+/* RagnaMusic-Theme für Spotify (Spicetify).
+   Farben kommen aus color.ini als --spice-*, Schriften und Logo aus assets/ragna/
+   (Spicetify kopiert sie nach Apps/xpui/ragna/).
+
+   Spotify ändert seine Klassennamen gelegentlich. Darum stützt sich das Theme vor allem
+   auf Farbvariablen und auf die stabilen Root__-, encore- und data-testid-Selektoren.
+   Fehlt ein Selektor nach einem Spotify-Update, greift einfach Spotifys eigener Stil. */
+
+/* ---------- Schriften (wie in RagnaMusic) ---------- */
+
+@font-face {
+  font-family: "Bricolage Grotesque Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url("ragna/fonts/bricolage-grotesque-latin-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Bricolage Grotesque Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url("ragna/fonts/bricolage-grotesque-latin-ext-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Onest Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("ragna/fonts/onest-latin-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Onest Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("ragna/fonts/onest-latin-ext-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url("ragna/fonts/jetbrains-mono-latin-400-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url("ragna/fonts/jetbrains-mono-latin-500-normal.woff2") format("woff2");
+}
+
+:root {
+  --ragna-font-display: "Bricolage Grotesque Variable", "Segoe UI", system-ui, sans-serif;
+  --ragna-font-body: "Onest Variable", "Segoe UI", system-ui, sans-serif;
+  --ragna-font-mono: "JetBrains Mono", "Cascadia Mono", ui-monospace, monospace;
+  /* setzt theme.js passend zum Cover, sonst das Blau aus RagnaMusic */
+  --ragna-tint: var(--spice-tint);
+}
+
+/* Spotify liest die Schrift aus diesen Variablen; direkt gesetzt als Rückfall */
+:root,
+body,
+.encore-dark-theme,
+.encore-light-theme {
+  --font-family: var(--ragna-font-body);
+  --encore-body-font-stack: var(--ragna-font-body);
+  --encore-variable-font-stack: var(--ragna-font-body);
+  --encore-title-font-stack: var(--ragna-font-display);
+}
+
+body,
+input,
+button,
+textarea {
+  font-family: var(--ragna-font-body);
+}
+
+h1,
+[class*="encore-text-headline"],
+.encore-text-title-large,
+.encore-text-title-medium {
+  font-family: var(--ragna-font-display) !important;
+  letter-spacing: -0.02em;
+}
+
+/* Zeiten in der Player-Leiste wie in RagnaMusic in Mono */
+[data-testid="playback-position"],
+[data-testid="playback-duration"] {
+  font-family: var(--ragna-font-mono) !important;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Flächen ---------- */
+
+/* Fenster wie der „Schreibtisch“ in RagnaMusic, Panels darauf */
+.Root__top-container,
+.Root__globalNav,
+.Root__now-playing-bar {
+  background-color: var(--spice-sidebar);
+}
+
+/* Die Oberfläche färbt sich passend zum Cover ein (Farbe und Stärke setzt theme.js) */
+.Root__main-view {
+  background-image: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--ragna-tint) var(--ragna-tint-mix, 42%), transparent) 0,
+    color-mix(in srgb, var(--ragna-tint) 12%, transparent) 260px,
+    transparent 520px
+  );
+}
+
+/* ---------- Akzent ---------- */
+
+/* Play-Knöpfe: Akzent mit passendem Symbol statt Grün mit Schwarz.
+   !important, weil Spotify dieselben Variablen mit teils höherer Spezifität setzt. */
+.encore-bright-accent-set {
+  --background-base: var(--spice-button) !important;
+  --background-highlight: var(--spice-button-active) !important;
+  --background-press: var(--spice-button) !important;
+  --text-base: var(--spice-accent-ink) !important;
+  --essential-base: var(--spice-accent-ink) !important;
+}
+
+/* Fortschritt und Lautstärke */
+.progress-bar {
+  --fg-color: var(--spice-button) !important;
+  --bg-color: rgba(var(--spice-rgb-subtext), 0.22) !important;
+  --is-active-fg-color: var(--spice-button) !important;
+}
+
+/* Gespeicherte Songs: Herz-Rosa aus RagnaMusic statt Akzent */
+[data-testid="add-button"][aria-checked="true"] {
+  color: var(--spice-like) !important;
+}
+
+::selection {
+  background: rgba(var(--spice-rgb-button), 0.35);
+}
+
+:focus-visible {
+  outline-color: var(--spice-button);
+}
+
+.os-scrollbar-handle {
+  background: rgba(var(--spice-rgb-subtext), 0.3) !important;
+  border-radius: 99px;
+}
+
+/* ---------- Badge „RagnaPatched“ oben rechts (fügt theme.js ein) ---------- */
+
+.ragna-badge {
+  -webkit-app-region: no-drag;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 7px;
+  height: 32px;
+  margin-inline: 4px 8px;
+  padding: 0 12px 0 5px;
+  border: 1px solid rgba(var(--spice-rgb-button), 0.45);
+  border-radius: 99px;
+  background: rgba(var(--spice-rgb-button), 0.12);
+  color: var(--spice-text);
+  font-family: var(--ragna-font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.ragna-badge:hover {
+  border-color: var(--spice-button);
+  background: rgba(var(--spice-rgb-button), 0.2);
+}
+
+.ragna-badge img {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+}
+
+.ragna-badge b {
+  color: var(--spice-button);
+  font-weight: 700;
+}
+
+/* Punkt am Badge, solange ein Update bereitsteht */
+.ragna-badge {
+  position: relative;
+}
+
+.ragna-badge.has-update::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--spice-sidebar);
+  border-radius: 50%;
+  background: var(--spice-like);
+}
+
+/* Rückfall, falls die obere Leiste nicht gefunden wird: frei schwebend */
+.ragna-badge--floating {
+  position: fixed;
+  top: 16px;
+  right: 152px;
+  z-index: 9999;
+}
+
+/* ---------- Theme-Umschalter (Klick aufs Badge oder Profilmenü) ---------- */
+
+.ragna-switcher {
+  display: grid;
+  gap: 22px;
+  color: var(--spice-text);
+  font-family: var(--ragna-font-body);
+  line-height: 1.45;
+}
+
+.ragna-switcher h3 {
+  margin: 0 0 10px;
+  font-family: var(--ragna-font-display);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.ragna-switcher button {
+  font: inherit;
+  color: inherit;
+}
+
+.ragna-presets {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.ragna-preset {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 7px;
+  border: 1px solid rgba(var(--spice-rgb-text), 0.09);
+  border-radius: 12px;
+  background: rgba(var(--spice-rgb-text), 0.03);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.ragna-preset:hover {
+  background: rgba(var(--spice-rgb-text), 0.07);
+}
+
+.ragna-preset.is-active {
+  border-color: var(--spice-button);
+  box-shadow: inset 0 0 0 1px var(--spice-button);
+}
+
+.ragna-preset__name {
+  padding: 0 3px 2px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Mini-Vorschau: Fensterhintergrund, Panel, zwei Textzeilen, Akzentpunkt */
+.ragna-preview,
+.ragna-preview * {
+  box-sizing: border-box;
+}
+
+.ragna-preview {
+  display: block;
+  height: 58px;
+  padding: 8px 8px 0 18px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(var(--spice-rgb-text), 0.08);
+}
+
+.ragna-preview__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  height: 100%;
+  padding: 10px;
+  border-radius: 6px 6px 0 0;
+}
+
+.ragna-preview__line {
+  display: block;
+  width: 64%;
+  height: 5px;
+  border-radius: 3px;
+  opacity: 0.9;
+}
+
+.ragna-preview__line--short {
+  width: 40%;
+  opacity: 0.65;
+}
+
+.ragna-preview__dot {
+  position: absolute;
+  right: 10px;
+  bottom: 9px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}
+
+.ragna-custom {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid rgba(var(--spice-rgb-text), 0.09);
+  border-radius: 14px;
+  background: rgba(var(--spice-rgb-text), 0.03);
+}
+
+.ragna-custom.is-active {
+  border-color: var(--spice-button);
+  box-shadow: inset 0 0 0 1px var(--spice-button);
+}
+
+.ragna-custom__head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ragna-custom__head .ragna-preview {
+  flex-shrink: 0;
+  width: 108px;
+}
+
+.ragna-custom__head h3 {
+  margin: 0;
+}
+
+.ragna-custom__head p {
+  margin: 2px 0 0;
+  color: var(--spice-subtext);
+  font-size: 13px;
+}
+
+.ragna-field {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+}
+
+.ragna-field > span {
+  color: var(--spice-subtext);
+  font-size: 13px;
+}
+
+.ragna-segmented {
+  display: inline-flex;
+  justify-self: start;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 99px;
+  background: rgba(var(--spice-rgb-text), 0.07);
+}
+
+.ragna-segmented button {
+  padding: 6px 14px;
+  border: 0;
+  border-radius: 99px;
+  background: transparent;
+  color: var(--spice-subtext);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ragna-segmented button:hover {
+  color: var(--spice-text);
+}
+
+.ragna-segmented button.is-active {
+  background: var(--spice-button);
+  color: var(--spice-accent-ink);
+}
+
+.ragna-accent {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.ragna-picker {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  cursor: pointer;
+}
+
+.ragna-picker::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.ragna-picker::-webkit-color-swatch {
+  border: 1px solid rgba(var(--spice-rgb-text), 0.2);
+  border-radius: 8px;
+}
+
+.ragna-hex {
+  width: 88px;
+  height: 34px;
+  padding: 0 10px;
+  border: 1px solid rgba(var(--spice-rgb-text), 0.14);
+  border-radius: 8px;
+  background: rgba(var(--spice-rgb-text), 0.04);
+  color: var(--spice-text);
+  font-family: var(--ragna-font-mono);
+  font-size: 12px;
+}
+
+.ragna-hex:focus {
+  outline: 2px solid var(--spice-button);
+  outline-offset: -1px;
+}
+
+.ragna-chips {
+  display: flex;
+  gap: 6px;
+  margin-left: 4px;
+}
+
+.ragna-chip {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.25);
+  cursor: pointer;
+}
+
+.ragna-chip.is-active {
+  border-color: var(--spice-text);
+}
+
+.ragna-toggle {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.ragna-toggle input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ragna-toggle__track {
+  position: relative;
+  flex-shrink: 0;
+  width: 38px;
+  height: 22px;
+  margin-top: 1px;
+  border-radius: 99px;
+  background: rgba(var(--spice-rgb-text), 0.18);
+  transition: background-color 0.15s ease;
+}
+
+.ragna-toggle__track::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--spice-text);
+  transition: transform 0.15s ease;
+}
+
+.ragna-toggle input:checked + .ragna-toggle__track {
+  background: var(--spice-button);
+}
+
+.ragna-toggle input:checked + .ragna-toggle__track::after {
+  transform: translateX(16px);
+  background: var(--spice-accent-ink);
+}
+
+.ragna-toggle input:focus-visible + .ragna-toggle__track {
+  outline: 2px solid var(--spice-button);
+  outline-offset: 2px;
+}
+
+.ragna-toggle b {
+  display: block;
+  font-size: 14px;
+}
+
+.ragna-toggle small {
+  display: block;
+  margin-top: 2px;
+  color: var(--spice-subtext);
+  font-size: 12.5px;
+}
+
+.ragna-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(var(--spice-rgb-text), 0.09);
+}
+
+.ragna-footer dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 2px 14px;
+  margin: 0;
+  font-size: 12px;
+}
+
+.ragna-footer dt {
+  color: var(--spice-subtext);
+}
+
+.ragna-footer dd {
+  margin: 0;
+  font-family: var(--ragna-font-mono);
+  font-size: 11.5px;
+}
+
+.ragna-pill {
+  flex-shrink: 0;
+  padding: 7px 16px;
+  border: 1px solid rgba(var(--spice-rgb-text), 0.2);
+  border-radius: 99px;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ragna-pill:hover:not(:disabled) {
+  border-color: var(--spice-text);
+}
+
+.ragna-pill:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.ragna-pill--accent {
+  border-color: var(--spice-button);
+  background: var(--spice-button);
+  color: var(--spice-accent-ink) !important;
+}
+
+.ragna-pill--accent:hover:not(:disabled) {
+  border-color: var(--spice-button-active);
+  background: var(--spice-button-active);
+}
+
+.ragna-footer__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* ---------- Update-Hinweis unten rechts ---------- */
+
+.ragna-update {
+  position: fixed;
+  right: 20px;
+  bottom: 100px;
+  z-index: 9999;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 340px;
+  padding: 14px 14px 14px 12px;
+  border: 1px solid rgba(var(--spice-rgb-button), 0.5);
+  border-radius: 14px;
+  background: var(--spice-main-elevated);
+  box-shadow: 0 18px 40px -12px rgb(0 0 0 / 0.6);
+  color: var(--spice-text);
+  font-family: var(--ragna-font-body);
+  font-size: 13px;
+  line-height: 1.45;
+  animation: ragna-update-in 0.25s ease-out;
+}
+
+@keyframes ragna-update-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.ragna-update > img {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+}
+
+.ragna-update > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.ragna-update b {
+  display: block;
+  font-family: var(--ragna-font-display);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.ragna-update p {
+  margin: 3px 0 0;
+  color: var(--spice-subtext);
+}
+
+.ragna-update .ragna-update__hint {
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+.ragna-update__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 11px;
+}
+
+.ragna-update button {
+  padding: 6px 14px;
+  border: 1px solid rgba(var(--spice-rgb-text), 0.2);
+  border-radius: 99px;
+  background: transparent;
+  color: var(--spice-text);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ragna-update button:hover {
+  border-color: var(--spice-text);
+}
+
+.ragna-update .ragna-update__primary {
+  border-color: var(--spice-button);
+  background: var(--spice-button);
+  color: var(--spice-accent-ink);
+}
+
+.ragna-update .ragna-update__primary:hover {
+  border-color: var(--spice-button-active);
+  background: var(--spice-button-active);
+}
+
+.ragna-update .ragna-update__link {
+  padding-inline: 6px;
+  border-color: transparent;
+  color: var(--spice-subtext);
+}
+
+.ragna-update .ragna-update__close {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  margin: -4px -4px 0 0;
+  padding: 0;
+  border: 0;
+  color: var(--spice-subtext);
+  font-size: 18px;
+  line-height: 1;
+}

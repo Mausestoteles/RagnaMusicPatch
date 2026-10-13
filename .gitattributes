@@ -1,0 +1,6 @@
+# Windows-Zeilenenden für alles, was cmd und PowerShell ausführen
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+*.woff2 binary
+*.png binary
+*.ico binary
