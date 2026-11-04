@@ -110,15 +110,4 @@ RagnaMusicPatch/
 
 Der Patch richtet außerdem ein: eine Kopie in `%LOCALAPPDATA%\RagnaMusicPatch`, das
 Link-Protokoll `ragnapatch://` (startet nur das Update) und zwei Startmenü-Einträge. Die
-Deinstallation entfernt alles wieder.
-
-## Neue Version veröffentlichen
-
-1. `$PatchVersion` in `patch.ps1` erhöhen, z. B. auf `0.3.0`.
-2. Committen, Tag `v0.3.0` setzen und pushen. Der Workflow `.github/workflows/release.yml`
-   baut daraus mit `tools/build-zip.ps1` die Zip samt Prüfsumme und legt das Release an.
-3. Ohne GitHub Actions: `tools\build-zip.ps1` lokal ausführen und die beiden Dateien aus
-   `dist\` von Hand an ein Release `v0.3.0` hängen.
-
-Spotify meldet die neue Version spätestens nach sechs Stunden oder sofort über
-**Nach Updates suchen**.
+Deinstallation entfernt alles wieder
