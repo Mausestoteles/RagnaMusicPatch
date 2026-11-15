@@ -99,7 +99,7 @@ $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-$PatchVersion = '0.2.1'
+$PatchVersion = '0.3.0'
 $ThemeName = 'RagnaMusic'
 $PatcherRoot = $PSScriptRoot
 $ThemeSource = Join-Path $PatcherRoot "theme\$ThemeName"
@@ -113,7 +113,7 @@ $InstallDir = Join-Path $env:LOCALAPPDATA 'RagnaMusicPatch'
 $ProtocolName = 'ragnapatch'
 $StartMenuDir = Join-Path $env:APPDATA 'Microsoft\Windows\Start Menu\Programs\RagnaMusic Patch'
 # was zum Patcher gehört; dieselbe Liste nutzt tools\build-zip.ps1 für das Release
-$PatcherFiles = 'patch.ps1', 'README.md', 'ragna.ico', 'Start Patch.bat', 'Update Patch.bat', 'Uninstall Patch.bat', 'theme'
+$PatcherFiles = 'patch.ps1', 'patch.sh', 'README.md', 'ragna.ico', 'Start Patch.bat', 'Update Patch.bat', 'Uninstall Patch.bat', 'theme'
 
 # ---------- Ausgabe ----------
 

@@ -22,6 +22,10 @@ jobs:
           if ("v$version" -ne "${{ github.ref_name }}") {
             throw "Tag ${{ github.ref_name }} passt nicht zu `$PatchVersion = '$version' in patch.ps1"
           }
+          $linux = (Select-String patch.sh -Pattern "^PATCH_VERSION='(.+)'").Matches[0].Groups[1].Value
+          if ($linux -ne $version) {
+            throw "PATCH_VERSION='$linux' in patch.sh passt nicht zu `$PatchVersion = '$version' in patch.ps1"
+          }
 
       - name: Zip bauen
         shell: pwsh

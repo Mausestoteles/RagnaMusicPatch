@@ -6,7 +6,8 @@ als Akzent, die Schriften von RagnaMusic, Einfärben nach dem Cover und oben rec
 
 Der Patch kombiniert zwei bestehende Projekte und lädt beide bei jedem Lauf frisch von GitHub:
 
-- [SpotX](https://github.com/SpotX-Official/SpotX) (MIT): patcht den Spotify-Client
+- [SpotX](https://github.com/SpotX-Official/SpotX) (MIT), unter Linux
+  [SpotX-Bash](https://github.com/SpotX-Official/SpotX-Bash) (MIT): patcht den Spotify-Client
   (Werbung, Update-Sperre, Startseite ohne Podcasts)
 - [Spicetify](https://github.com/spicetify/cli) (LGPL-2.1): spielt das Theme auf
 
@@ -22,6 +23,34 @@ SpotX installiert dann die Desktop-Version.
 
 Entfernen: **`Uninstall Patch.bat`** oder Startmenü → RagnaMusic Patch → **RagnaMusic Patch
 entfernen**. Spotify läuft danach wieder im Originalzustand.
+
+## Linux
+
+Die Zip enthält auch **`patch.sh`**. Im entpackten Ordner ein Terminal öffnen und starten:
+
+```bash
+bash patch.sh
+```
+
+Nicht mit `sudo` starten: Wo der Patch Rechte braucht, fragt er selbst nach dem Passwort.
+
+- **Spotify als .deb** (`/usr/share/spotify`, offizielles Spotify-Repo) und **Flatpak**
+  (`com.spotify.Client`) werden direkt gepatcht. Spicetify braucht dafür Schreibrechte im
+  Spotify-Ordner; der Patch setzt sie einmal per `sudo chmod`.
+- **Snap** ist schreibgeschützt und lässt sich weder von SpotX noch von Spicetify verändern.
+  Der Patch fragt nach und ersetzt die Snap-Version durch die .deb-Version (geht nur auf
+  Distributionen mit APT, also Ubuntu, Debian, Mint …). Danach einmal neu bei Spotify anmelden.
+- Ist Spotify gar nicht installiert, installiert der Patch auf APT-Systemen die .deb-Version.
+- **Spotify-Updates** sperrt der Patch mit `apt-mark hold spotify-client` bzw. `flatpak mask`.
+- Updater und Entfernen stehen danach im Anwendungsmenü (**RagnaMusic Patch aktualisieren**,
+  **RagnaMusic Patch entfernen**); der Knopf **Updaten** in Spotify öffnet `ragnapatch://`,
+  das ebenfalls das Update startet. Ohne Menü:
+  `bash ~/.local/share/RagnaMusicPatch/patch.sh --update` bzw. `--uninstall`.
+
+Die Optionen heißen unter Linux klein mit zwei Strichen, z. B. `bash patch.sh --scheme light`,
+`--theme-only`, `--premium`, `--keep-podcasts`, `--allow-updates`, `--yes`,
+`--uninstall --remove-spicetify`; alle zeigt `bash patch.sh --help`. Zusätzlich gibt es
+`--spotify-path <ordner>` für Spotify an ungewöhnlichen Orten.
 
 ## Updates
 
@@ -100,6 +129,7 @@ RagnaMusicPatch/
 ├── Update Patch.bat        neueste Version holen und aufspielen
 ├── Uninstall Patch.bat     Patch entfernen
 ├── patch.ps1               eigentlicher Patcher und Updater
+├── patch.sh                dasselbe für Linux
 ├── ragna.ico               Symbol für Startmenü und ragnapatch://
 └── theme/RagnaMusic/       Spicetify-Theme
     ├── color.ini           Farbschemata dark und light (aus RagnaMusic tokens.css)
@@ -109,5 +139,6 @@ RagnaMusicPatch/
 ```
 
 Der Patch richtet außerdem ein: eine Kopie in `%LOCALAPPDATA%\RagnaMusicPatch`, das
-Link-Protokoll `ragnapatch://` (startet nur das Update) und zwei Startmenü-Einträge. Die
-Deinstallation entfernt alles wieder
+Link-Protokoll `ragnapatch://` (startet nur das Update) und zwei Startmenü-Einträge. Unter
+Linux liegen Kopie und Menü-Einträge in `~/.local/share/RagnaMusicPatch` und
+`~/.local/share/applications`. Die Deinstallation entfernt alles wieder

@@ -15,7 +15,7 @@ $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.IO.Compression, System.IO.Compression.FileSystem
 
 $root = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
-$files = 'patch.ps1', 'README.md', 'ragna.ico', 'Start Patch.bat', 'Update Patch.bat', 'Uninstall Patch.bat', 'theme'
+$files = 'patch.ps1', 'patch.sh', 'README.md', 'ragna.ico', 'Start Patch.bat', 'Update Patch.bat', 'Uninstall Patch.bat', 'theme'
 
 New-Item -ItemType Directory -Force -Path $OutDir | Out-Null
 $OutDir = [IO.Path]::GetFullPath($OutDir)

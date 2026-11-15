@@ -4,3 +4,5 @@
 *.woff2 binary
 *.png binary
 *.ico binary
+# Linux-Zeilenenden für patch.sh, auch wenn das Release unter Windows gebaut wird
+*.sh text eol=lf
