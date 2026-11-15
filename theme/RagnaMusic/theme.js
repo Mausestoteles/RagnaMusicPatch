@@ -6,7 +6,7 @@
 // Variablen umgebogen hat, wechselt der ganze Client sofort.
 
 (function ragnaTheme() {
-  // Ersetzt patch.ps1 beim Kopieren ins Spicetify-Themes-Verzeichnis durch die Patch-Daten
+  // Ersetzt patch.ps1 bzw. patch.sh beim Kopieren ins Spicetify-Themes-Verzeichnis durch die Patch-Daten
   const PATCH_INFO = /*RAGNA_PATCH_INFO*/ null;
 
   const BADGE_ID = "ragna-badge";
@@ -16,7 +16,7 @@
   const UPDATE_EVERY_MS = 6 * 60 * 60 * 1000;
   /** „Später“ blendet die Meldung für diese Version so lange aus */
   const SNOOZE_MS = 24 * 60 * 60 * 1000;
-  /** Startet patch.ps1 -Update; der Patcher verknüpft das Protokoll bei der Installation */
+  /** Startet patch.ps1 -Update bzw. patch.sh --update; der Patcher verknüpft das Protokoll bei der Installation */
   const UPDATE_URL = "ragnapatch://update";
   /** So lange wird auf die obere Leiste gewartet, danach schwebt das Badge frei */
   const NAV_WAIT_MS = 8000;
@@ -542,7 +542,13 @@
           {},
           el("b", {}, "Update läuft …"),
           el("p", {}, "Ein Fenster von RagnaMusic Patch öffnet sich, danach startet Spotify neu."),
-          el("p", { class: "ragna-update__hint" }, "Kein Fenster? Startmenü → RagnaMusic Patch → RagnaMusic Patch aktualisieren."),
+          el(
+            "p",
+            { class: "ragna-update__hint" },
+            PATCH_INFO?.platform === "linux"
+              ? "Kein Fenster? Anwendungsmenü → RagnaMusic Patch aktualisieren, oder im Terminal: bash ~/.local/share/RagnaMusicPatch/patch.sh --update"
+              : "Kein Fenster? Startmenü → RagnaMusic Patch → RagnaMusic Patch aktualisieren.",
+          ),
         )
       : el(
           "div",
